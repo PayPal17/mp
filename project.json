@@ -1,0 +1,37 @@
+## Operation Marry — Cinematic Landing Page
+
+A single-page, dark/gold cinematic site for the $MARRY memecoin wedding story. Implemented on the existing TanStack Start home route (`src/routes/index.tsx`) — the spec says "pure HTML/CSS/JS", which I'll honor stylistically (no UI libraries, no shadcn components, no Tailwind utility classes for visuals) while keeping the project's React shell intact.
+
+### Sections (single page, vertical scroll)
+1. **Hero** — floating gold engagement ring (pure CSS ring + pulsing glow), title `OPERATION MARRY` in Cinzel, subtitle tagline.
+2. **Story** — Cormorant Garamond body: "She's 10,000km away. My salary isn't enough. So I let the internet fund our wedding. Live ceremony. Real love. One coin. 💍"
+3. **Ticker** — oversized gold `$MARRY` marquee-style text with glow.
+4. **CTAs** — two buttons: `FOLLOW THE MISSION` → https://x.com/OperationMarry, `BUY $MARRY` (placeholder `#`).
+5. **Footer** — `© OPERATION MARRY · 💍`.
+
+### Design
+- Deep black background (`#000` with subtle nebula radial gradients in purple `#3a1a5c` + gold `#c8a96e`).
+- Gold primary `#c8a96e`, soft cream text.
+- Cinzel (titles) + Cormorant Garamond (body) loaded from Google Fonts via the route's `head()`.
+- Luxury cinematic feel: generous spacing, thin gold rules, letter-spaced caps.
+
+### Animations
+- **Canvas starfield**: full-viewport `<canvas>` behind content, ~150 twinkling particles with sine-wave opacity, parallax drift; `requestAnimationFrame` loop set up + torn down in `useEffect`.
+- **Floating ring**: CSS — a circular gold band (border + inner shadow) with a tiny diamond, `@keyframes float` (translateY) + `@keyframes ringGlow` (box-shadow pulsing gold).
+- **Nebula glow**: two large blurred radial-gradient divs (purple + gold) slowly drifting via keyframes.
+- **Staggered fade-up on load**: `@keyframes fadeUp` applied to hero/story/ticker/buttons/footer with incremental `animation-delay`.
+- **Button hover**: gold border glow intensifies, subtle lift.
+
+### Files to change/create
+- `src/routes/index.tsx` — replace placeholder with the full page (canvas effect via `useEffect`, semantic HTML, scoped class names). Add `head()` with SEO title/description, OG tags, and Google Fonts `<link>` entries.
+- `src/styles/operation-marry.css` — all keyframes, ring, nebula, typography, button, layout, responsive rules. Imported from the route file.
+
+### Technical notes
+- No new npm dependencies.
+- Fonts via Google Fonts `<link>` injected through TanStack `head()`.
+- Mobile responsive: fluid `clamp()` typography, stacked CTAs under 640px, canvas scales with `devicePixelRatio`.
+- SEO: unique `<title>` "Operation Marry — Fund Our Wedding with $MARRY", meta description, OG/Twitter tags, single H1.
+- Cleanup the canvas RAF + resize listener on unmount.
+
+### Out of scope
+Real token contract address, actual buy link wiring, live ceremony stream — `BUY $MARRY` points to `#` until you provide a URL.
